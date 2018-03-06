@@ -2,6 +2,7 @@ package com.unicorn.mediatorex.dagger2
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.unicorn.mediatorex.NullOnEmptyConverterFactory
+import com.unicorn.mediatorex.UserInfo
 import com.unicorn.mediatorex.UserService
 import dagger.Module
 import dagger.Provides
@@ -17,16 +18,27 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient():OkHttpClient = OkHttpClient.Builder()
+    fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
             .addNetworkInterceptor(StethoInterceptor())
+            .addInterceptor {
+                if (UserInfo.loginResponse==null){
+                    val request = it.request().newBuilder()
+                            .build()
+                  return@addInterceptor it.proceed(request)
+                }
+                val request = it.request().newBuilder()
+                        .addHeader("Cookie", "SESSION=${UserInfo.loginResponse!!.jsessionid}")
+                        .build()
+                it.proceed(request)
+            }
             .build()
 
     @Singleton
     @Provides
-    fun provideRetrofit(@Named("baseUrl") baseUrl: String,okHttpClient: OkHttpClient):Retrofit = Retrofit.Builder()
+    fun provideRetrofit(@Named("baseUrl") baseUrl: String, okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)
-            .addConverterFactory( NullOnEmptyConverterFactory())
+            .addConverterFactory(NullOnEmptyConverterFactory())
             .addConverterFactory(GsonConverterFactory.create())
 
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -34,6 +46,6 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideUserService(retrofit: Retrofit):UserService =retrofit.create(UserService::class.java)
+    fun provideUserService(retrofit: Retrofit): UserService = retrofit.create(UserService::class.java)
 
 }

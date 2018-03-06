@@ -8,6 +8,7 @@ import com.unicorn.mediatorex.dagger2.ComponentsHolder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -18,10 +19,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ComponentsHolder.appComponent.inject(this)
+        tvLogin.setOnClickListener { login() }
+        tvGetTag.setOnClickListener { getTag() }
     }
 
     override fun onBackPressed() {
-        getVercode()
+        login()
     }
 
     @Inject
@@ -53,6 +56,60 @@ class MainActivity : AppCompatActivity() {
                         },
                         onError = {
                             Log.e("result", it.toString())
+                        },
+                        onNext = {
+                            Log.e("result", it.toString())
+                        }
+                )
+    }
+
+    private fun login() {
+        userService.login("18930158215", "123456")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onComplete = {
+                            Log.e("result", "complete")
+                        },
+                        onError = {
+                            Log.e("result", it.toString())
+                        },
+                        onNext = {
+                            UserInfo.loginResponse = it
+                        }
+                )
+    }
+
+    private fun relogin() {
+        userService.loginByToken(UserInfo.loginResponse!!.loginToken)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onComplete = {
+                            Log.e("result", "complete")
+                        },
+                        onError = {
+                            Log.e("result", it.toString())
+                        },
+                        onNext = {
+                            UserInfo.loginResponse = it
+                        }
+                )
+    }
+
+    private fun getTag(){
+        userService.getTag()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onComplete = {
+                            Log.e("result", "complete")
+                        },
+                        onError = {
+                            if (it is HttpException && it.code() == 403) {
+                                relogin()
+                            }
+//                            Log.e("result", it.toString())
                         },
                         onNext = {
                             Log.e("result", it.toString())
