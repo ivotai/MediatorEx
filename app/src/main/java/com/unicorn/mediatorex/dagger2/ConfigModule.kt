@@ -11,6 +11,6 @@ class ConfigModule {
     @Singleton
     @Provides
     @Named(value = "baseUrl")
-    fun baseUrl() = "https://kjgk.natapp4.cc/"
+    fun baseUrl() = "https://kjgk.natapp4.cc/med/"
 
 }

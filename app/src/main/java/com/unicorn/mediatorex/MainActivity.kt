@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.blankj.utilcode.util.ToastUtils
 import com.unicorn.mediatorex.dagger2.ComponentsHolder
+import com.unicorn.mediatorex.service.MediatorService
+import com.unicorn.mediatorex.service.UserService
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -21,18 +24,24 @@ class MainActivity : AppCompatActivity() {
         ComponentsHolder.appComponent.inject(this)
         tvLogin.setOnClickListener { login() }
         tvGetTag.setOnClickListener { getTag() }
+        tvGetOccupation.setOnClickListener { getOccupation() }
     }
 
     override fun onBackPressed() {
-        login()
+        getVercode()
     }
 
     @Inject
     lateinit var userService: UserService
+    @Inject
+    lateinit var mediatorService: MediatorService
 
     private fun getVercode() {
         userService.getVerifyCode("18930158215")
                 .subscribeOn(Schedulers.io())
+                .retryWhen {
+                    Observable.just(1)
+                }
                 .subscribeBy(
                         onError = {
                             // TODO 统一处理
@@ -68,9 +77,6 @@ class MainActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                        onComplete = {
-                            Log.e("result", "complete")
-                        },
                         onError = {
                             Log.e("result", it.toString())
                         },
@@ -84,6 +90,7 @@ class MainActivity : AppCompatActivity() {
         userService.loginByToken(UserInfo.loginResponse!!.loginToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+
                 .subscribeBy(
                         onComplete = {
                             Log.e("result", "complete")
@@ -97,19 +104,27 @@ class MainActivity : AppCompatActivity() {
                 )
     }
 
-    private fun getTag(){
-        userService.getTag()
+    private fun getTag() {
+        mediatorService.getTags()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                        onComplete = {
-                            Log.e("result", "complete")
-                        },
                         onError = {
-                            if (it is HttpException && it.code() == 403) {
-                                relogin()
-                            }
-//                            Log.e("result", it.toString())
+                            Log.e("result", it.toString())
+                        },
+                        onNext = {
+                            Log.e("result", it.toString())
+                        }
+                )
+    }
+
+    private fun getOccupation() {
+        mediatorService.getOccupations()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onError = {
+                            Log.e("result", it.toString())
                         },
                         onNext = {
                             Log.e("result", it.toString())

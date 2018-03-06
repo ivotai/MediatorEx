@@ -1,11 +1,2 @@
-接口:
-https://kjgk.natapp4.cc/med/register/verifyCode?phoneNo=18900000000 GET 注册时发送手机验证码
-https://kjgk.natapp4.cc/med/register/mobile POST
-{
 
-	"phoneNo": "1890000000",
-	"password": "123456",
-	"verifyCode": "244569"
-}
-通过手机注册
 

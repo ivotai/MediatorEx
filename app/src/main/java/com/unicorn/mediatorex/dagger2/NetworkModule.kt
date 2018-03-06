@@ -3,7 +3,8 @@ package com.unicorn.mediatorex.dagger2
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.unicorn.mediatorex.NullOnEmptyConverterFactory
 import com.unicorn.mediatorex.UserInfo
-import com.unicorn.mediatorex.UserService
+import com.unicorn.mediatorex.service.MediatorService
+import com.unicorn.mediatorex.service.UserService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -47,5 +48,9 @@ class NetworkModule {
     @Singleton
     @Provides
     fun provideUserService(retrofit: Retrofit): UserService = retrofit.create(UserService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideMediatorService(retrofit: Retrofit): MediatorService = retrofit.create(MediatorService::class.java)
 
 }

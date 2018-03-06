@@ -18,5 +18,11 @@
         android:layout_height="wrap_content"
         android:text="GetTag" />
 
+    <TextView
+        android:layout_marginTop="40dp"
+        android:id="@+id/tvGetOccupation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GetOccupation" />
 
 </LinearLayout>
