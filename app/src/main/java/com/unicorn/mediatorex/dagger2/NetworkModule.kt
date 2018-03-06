@@ -1,6 +1,7 @@
 package com.unicorn.mediatorex.dagger2
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.unicorn.mediatorex.NullOnEmptyConverterFactory
 import com.unicorn.mediatorex.UserService
 import dagger.Module
 import dagger.Provides
@@ -25,7 +26,9 @@ class NetworkModule {
     fun provideRetrofit(@Named("baseUrl") baseUrl: String,okHttpClient: OkHttpClient):Retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)
+            .addConverterFactory( NullOnEmptyConverterFactory())
             .addConverterFactory(GsonConverterFactory.create())
+
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 

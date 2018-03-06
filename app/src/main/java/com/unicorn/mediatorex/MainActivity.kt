@@ -3,10 +3,12 @@ package com.unicorn.mediatorex
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import com.blankj.utilcode.util.ToastUtils
 import com.unicorn.mediatorex.dagger2.ComponentsHolder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 import javax.inject.Inject
 
 
@@ -19,24 +21,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        register()
+        getVercode()
     }
 
     @Inject
     lateinit var userService: UserService
 
     private fun getVercode() {
-        userService.getVerifyCode("13611840424")
+        userService.getVerifyCode("18930158215")
                 .subscribeOn(Schedulers.io())
                 .subscribeBy(
-                        onComplete = {
-                            Log.e("result", "complete")
-                        },
                         onError = {
-                            Log.e("result", it.toString())
+                            // TODO 统一处理
+                            if (it is HttpException && it.code() == 400) {
+                                it.response().errorBody()?.string().let { ToastUtils.showShort(it) }
+                            }
                         },
                         onNext = {
-                            Log.e("result", it.toString())
+                            //                            Log.e("result", it.toString())
                         }
                 )
     }
