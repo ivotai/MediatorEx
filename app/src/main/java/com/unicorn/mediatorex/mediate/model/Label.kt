@@ -1,4 +1,4 @@
-package com.unicorn.mediatorex.model
+package com.unicorn.mediatorex.mediate.model
 
 import android.support.annotation.Size
 

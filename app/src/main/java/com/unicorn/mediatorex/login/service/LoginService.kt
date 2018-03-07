@@ -1,7 +1,7 @@
 package com.unicorn.mediatorex.login.service
 
-import com.unicorn.mediatorex.LoginResponse
-import com.unicorn.mediatorex.RegisterParam
+import com.unicorn.mediatorex.login.model.LoginResponse
+import com.unicorn.mediatorex.login.model.RegisterParam
 import io.reactivex.Observable
 import retrofit2.http.*
 

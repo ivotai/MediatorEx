@@ -1,4 +1,4 @@
-package com.unicorn.mediatorex.dagger2
+package com.unicorn.mediatorex.app.dagger2.module
 
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.DiskLogAdapter

@@ -1,6 +1,6 @@
-package com.unicorn.mediatorex.service
+package com.unicorn.mediatorex.mediate.service
 
-import com.unicorn.mediatorex.model.Label
+import com.unicorn.mediatorex.mediate.model.Label
 import io.reactivex.Observable
 import retrofit2.http.GET
 

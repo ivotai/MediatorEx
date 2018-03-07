@@ -1,7 +1,7 @@
-package com.unicorn.mediatorex.dagger2
+package com.unicorn.mediatorex.app.dagger2.module
 
 import com.unicorn.mediatorex.login.service.LoginService
-import com.unicorn.mediatorex.service.MediatorService
+import com.unicorn.mediatorex.mediate.service.MediatorService
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

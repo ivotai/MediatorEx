@@ -4,7 +4,7 @@ import android.app.Application
 import com.blankj.utilcode.util.Utils
 import com.facebook.stetho.Stetho
 import com.orhanobut.logger.Logger
-import com.unicorn.mediatorex.dagger2.ComponentsHolder
+import com.unicorn.mediatorex.app.dagger2.ComponentsHolder
 
 
 class App : Application() {

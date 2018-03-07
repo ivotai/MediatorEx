@@ -1,13 +1,16 @@
-package com.unicorn.mediatorex
+package com.unicorn.mediatorex.login
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.blankj.utilcode.util.ToastUtils
 import com.orhanobut.logger.Logger
-import com.unicorn.mediatorex.dagger2.ComponentsHolder
+import com.unicorn.mediatorex.R
+import com.unicorn.mediatorex.app.model.UserInfo
+import com.unicorn.mediatorex.app.dagger2.ComponentsHolder
+import com.unicorn.mediatorex.login.model.RegisterParam
 import com.unicorn.mediatorex.login.service.LoginService
-import com.unicorn.mediatorex.service.MediatorService
+import com.unicorn.mediatorex.mediate.service.MediatorService
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy

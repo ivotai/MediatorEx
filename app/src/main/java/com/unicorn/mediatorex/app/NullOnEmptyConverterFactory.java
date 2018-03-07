@@ -1,4 +1,4 @@
-package com.unicorn.mediatorex;
+package com.unicorn.mediatorex.app;
 
 import android.support.annotation.NonNull;
 

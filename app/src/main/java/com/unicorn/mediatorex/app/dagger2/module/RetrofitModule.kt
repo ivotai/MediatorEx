@@ -1,8 +1,8 @@
-package com.unicorn.mediatorex.dagger2
+package com.unicorn.mediatorex.app.dagger2.module
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import com.unicorn.mediatorex.NullOnEmptyConverterFactory
-import com.unicorn.mediatorex.UserInfo
+import com.unicorn.mediatorex.app.NullOnEmptyConverterFactory
+import com.unicorn.mediatorex.app.model.UserInfo
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
