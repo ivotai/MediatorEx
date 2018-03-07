@@ -48,8 +48,8 @@ dependencies {
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
     implementation 'com.google.dagger:dagger:2.14.1'
     kapt 'com.google.dagger:dagger-compiler:2.14.1'
-    implementation 'cn.jiguang.sdk:jmessage:2.5.0'  // 此处以JMessage 2.5.0 版本为例。
-    implementation 'cn.jiguang.sdk:jcore:1.1.9'     // 此处以JCore 1.1.9 版本为例。
+//    implementation 'cn.jiguang.sdk:jmessage:2.5.0'  // 此处以JMessage 2.5.0 版本为例。
+//    implementation 'cn.jiguang.sdk:jcore:1.1.9'     // 此处以JCore 1.1.9 版本为例。
     implementation 'com.blankj:utilcode:1.13.1'
     implementation 'com.orhanobut:logger:2.1.1'
 }

@@ -6,8 +6,8 @@ import android.util.Log
 import com.blankj.utilcode.util.ToastUtils
 import com.orhanobut.logger.Logger
 import com.unicorn.mediatorex.dagger2.ComponentsHolder
+import com.unicorn.mediatorex.login.service.LoginService
 import com.unicorn.mediatorex.service.MediatorService
-import com.unicorn.mediatorex.service.UserService
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -35,12 +35,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Inject
-    lateinit var userService: UserService
+    lateinit var loginService: LoginService
     @Inject
     lateinit var mediatorService: MediatorService
 
     private fun getVercode() {
-        userService.getVerifyCode("13611840424")
+        loginService.getVerifyCode("13611840424")
                 .subscribeOn(Schedulers.io())
                 .subscribeBy(
                         onError = {
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun register() {
-        userService.register(RegisterParam("13611840424", "123456", "160217"))
+        loginService.register(RegisterParam("13611840424", "123456", "160217"))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun login() {
-        userService.login("13611840424", "123456")
+        loginService.login("13611840424", "123456")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                 )
     }
 
-    private fun relogin() = userService.loginByToken(UserInfo.loginResponse!!.loginToken)
+    private fun relogin() = loginService.loginByToken(UserInfo.loginResponse!!.loginToken)
             .subscribeOn(Schedulers.io())
             .doOnSubscribe { log("自动登录中...") }
             .doOnNext {
@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onNext = {
-                            it.let { log(it) }
+                           Logger.d(it)
                         },
                         onError = {
                             it.let { log(it) }

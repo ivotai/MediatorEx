@@ -1,4 +1,4 @@
-package com.unicorn.mediatorex.service
+package com.unicorn.mediatorex.login.service
 
 import com.unicorn.mediatorex.LoginResponse
 import com.unicorn.mediatorex.RegisterParam
@@ -6,7 +6,7 @@ import io.reactivex.Observable
 import retrofit2.http.*
 
 
-interface UserService {
+interface LoginService {
 
     @GET("register/verifyCode")
     fun getVerifyCode(@Query("phoneNo") phoneNo: String): Observable<String>
