@@ -1,7 +1,7 @@
 package com.unicorn.mediatorex.login.service
 
 import com.unicorn.mediatorex.login.model.LoginResponse
-import com.unicorn.mediatorex.login.model.RegisterParam
+import com.unicorn.mediatorex.login.model.RegisterInfo
 import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.*
@@ -14,7 +14,7 @@ interface LoginService {
 
     @Headers("Content-Type: application/json")
     @POST("register/mobile")
-    fun register(@Body registerParam: RegisterParam): Observable<Any>
+    fun register(@Body registerInfo: RegisterInfo): Single<Any>
 
     @FormUrlEncoded
     @POST("login/default")

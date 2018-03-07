@@ -16,7 +16,7 @@ class LoggerModule {
     fun provideAndroidLogAdapter(): AndroidLogAdapter {
         val formatStrategy = PrettyFormatStrategy.newBuilder()
                 .showThreadInfo(true)
-                .methodCount(1)
+                .methodCount(0)
                 .build()
         return object : AndroidLogAdapter(formatStrategy) {
             override fun isLoggable(priority: Int, tag: String?): Boolean {

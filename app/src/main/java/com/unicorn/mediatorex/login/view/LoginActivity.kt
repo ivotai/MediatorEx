@@ -6,6 +6,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.blankj.utilcode.util.ToastUtils
 import com.unicorn.mediatorex.R
 import com.unicorn.mediatorex.app.dagger2.ComponentsHolder
+import com.unicorn.mediatorex.login.model.RegisterInfo
 import com.unicorn.mediatorex.login.presenter.LoginPresenter
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -16,8 +17,17 @@ class LoginActivity : AppCompatActivity(), LoginView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        supportActionBar?.title = "注册&登录"
+
         val presenter = LoginPresenter(this, ComponentsHolder.appComponent.getLoginService())
-        btnVercode.setOnClickListener { presenter.getVercode(etPhoneNo.text.toString()) }
+        btnVerifyCode.setOnClickListener { presenter.getVerifyCode(etPhoneNo.text.toString()) }
+        btnRegister.setOnClickListener {
+            presenter.register(RegisterInfo(
+                    phoneNo = etPhoneNo.text.toString(),
+                    password = etPassword.text.toString(),
+                    verifyCode = etVerifyCode.text.toString()
+            ))
+        }
     }
 
     private var dialog: MaterialDialog? = null

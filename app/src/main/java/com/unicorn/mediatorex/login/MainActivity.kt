@@ -6,7 +6,6 @@ import android.util.Log
 import com.orhanobut.logger.Logger
 import com.unicorn.mediatorex.R
 import com.unicorn.mediatorex.app.model.UserInfo
-import com.unicorn.mediatorex.login.model.RegisterParam
 import com.unicorn.mediatorex.login.service.LoginService
 import com.unicorn.mediatorex.mediate.service.MediateService
 import io.reactivex.Observable
@@ -24,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        tvRegister.setOnClickListener { register() }
+
         tvLogin.setOnClickListener { login() }
         tvGetTag.setOnClickListener { getTag() }
         tvGetOccupation.setOnClickListener { getOccupation() }
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var mediateService: MediateService
 
-//    private fun getVercode() {
+//    private fun getVerifyCode() {
 //        loginService.getVerifyCode("13611840424")
 //                .subscribeOn(Schedulers.io())
 //                .subscribeBy(
@@ -54,23 +53,23 @@ class MainActivity : AppCompatActivity() {
 //                )
 //    }
 
-    private fun register() {
-        loginService.register(RegisterParam("13611840424", "123456", "160217"))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onComplete = {
-                            Log.e("result", "complete")
-                        },
-                        onError = {
-                            Log.e("result", it.toString())
-                        },
-                        onNext = {
-
+//    private fun register() {
+//        loginService.register(RegisterInfo("13611840424", "123456", "160217"))
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeBy(
+//                        onComplete = {
+//                            Log.e("result", "complete")
+//                        },
+//                        onError = {
 //                            Log.e("result", it.toString())
-                        }
-                )
-    }
+//                        },
+//                        onNext = {
+//
+////                            Log.e("result", it.toString())
+//                        }
+//                )
+//    }
 
     private fun login() {
         loginService.login("13611840424", "123456")
