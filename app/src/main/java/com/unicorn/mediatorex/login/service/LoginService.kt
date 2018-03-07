@@ -10,7 +10,7 @@ import retrofit2.http.*
 interface LoginService {
 
     @GET("register/verifyCode")
-    fun getVerifyCode(@Query("phoneNo") phoneNo: String): Single<String>
+    fun getVerifyCode(@Query("phoneNo") phoneNo: String): Single<Any>
 
     @Headers("Content-Type: application/json")
     @POST("register/mobile")
