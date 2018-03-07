@@ -4,7 +4,7 @@ import com.unicorn.mediatorex.mediate.model.Label
 import io.reactivex.Observable
 import retrofit2.http.GET
 
-interface MediatorService {
+interface MediateService {
 
     @GET("public/tags")
     fun getTags(): Observable<List<Label>>

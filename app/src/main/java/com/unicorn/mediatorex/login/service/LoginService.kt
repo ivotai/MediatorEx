@@ -3,13 +3,14 @@ package com.unicorn.mediatorex.login.service
 import com.unicorn.mediatorex.login.model.LoginResponse
 import com.unicorn.mediatorex.login.model.RegisterParam
 import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.*
 
 
 interface LoginService {
 
     @GET("register/verifyCode")
-    fun getVerifyCode(@Query("phoneNo") phoneNo: String): Observable<String>
+    fun getVerifyCode(@Query("phoneNo") phoneNo: String): Single<String>
 
     @Headers("Content-Type: application/json")
     @POST("register/mobile")

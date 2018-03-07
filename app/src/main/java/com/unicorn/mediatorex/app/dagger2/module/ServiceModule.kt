@@ -1,7 +1,7 @@
 package com.unicorn.mediatorex.app.dagger2.module
 
 import com.unicorn.mediatorex.login.service.LoginService
-import com.unicorn.mediatorex.mediate.service.MediatorService
+import com.unicorn.mediatorex.mediate.service.MediateService
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -16,6 +16,6 @@ class ServiceModule{
 
     @Singleton
     @Provides
-    fun provideMediatorService(retrofit: Retrofit): MediatorService = retrofit.create(MediatorService::class.java)
+    fun provideMediatorService(retrofit: Retrofit): MediateService = retrofit.create(MediateService::class.java)
 
 }

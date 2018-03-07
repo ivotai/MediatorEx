@@ -6,7 +6,7 @@ import com.unicorn.mediatorex.app.dagger2.module.ConfigModule
 import com.unicorn.mediatorex.app.dagger2.module.LoggerModule
 import com.unicorn.mediatorex.app.dagger2.module.RetrofitModule
 import com.unicorn.mediatorex.app.dagger2.module.ServiceModule
-import com.unicorn.mediatorex.login.MainActivity
+import com.unicorn.mediatorex.login.service.LoginService
 import dagger.Component
 import javax.inject.Singleton
 
@@ -17,7 +17,7 @@ import javax.inject.Singleton
 ])
 interface AppComponent {
 
-    fun inject(o: MainActivity)
+    fun getLoginService(): LoginService
     fun getDiskLogAdapter(): DiskLogAdapter
     fun getAndroidLogAdapter(): AndroidLogAdapter
 

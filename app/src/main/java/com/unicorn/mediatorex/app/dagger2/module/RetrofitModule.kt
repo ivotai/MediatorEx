@@ -19,16 +19,15 @@ class RetrofitModule {
     @Provides
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
             .addNetworkInterceptor(StethoInterceptor())
-            .addInterceptor {
-                if (UserInfo.loginResponse==null){
-                    val request = it.request().newBuilder()
+            .addInterceptor { chain ->
+                val pathSegments = chain.request().url().encodedPathSegments()
+                if (pathSegments.contains("login") || pathSegments.contains("register"))
+                    chain.proceed(chain.request())
+                else
+                    chain.request().newBuilder()
+                            .addHeader("Cookie", "SESSION=${UserInfo.jessionId}")
                             .build()
-                  return@addInterceptor it.proceed(request)
-                }
-                val request = it.request().newBuilder()
-                        .addHeader("Cookie", "SESSION=${UserInfo.loginResponse!!.jsessionid}")
-                        .build()
-                it.proceed(request)
+                            .let { chain.proceed(it) }
             }
             .build()
 

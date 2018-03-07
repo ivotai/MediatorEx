@@ -13,10 +13,10 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
-        ndk {
-            //选择要添加的对应cpu类型的.so库。
-            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
-        }
+//        ndk {
+        //选择要添加的对应cpu类型的.so库。
+//            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
+//        }
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
                 JPUSH_APPKEY : "2a497d2b33e3a67f1f69c59a",
@@ -52,4 +52,6 @@ dependencies {
 //    implementation 'cn.jiguang.sdk:jcore:1.1.9'     // 此处以JCore 1.1.9 版本为例。
     implementation 'com.blankj:utilcode:1.13.1'
     implementation 'com.orhanobut:logger:2.1.1'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+
 }

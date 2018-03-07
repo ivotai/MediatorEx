@@ -3,14 +3,12 @@ package com.unicorn.mediatorex.login
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import com.blankj.utilcode.util.ToastUtils
 import com.orhanobut.logger.Logger
 import com.unicorn.mediatorex.R
 import com.unicorn.mediatorex.app.model.UserInfo
-import com.unicorn.mediatorex.app.dagger2.ComponentsHolder
 import com.unicorn.mediatorex.login.model.RegisterParam
 import com.unicorn.mediatorex.login.service.LoginService
-import com.unicorn.mediatorex.mediate.service.MediatorService
+import com.unicorn.mediatorex.mediate.service.MediateService
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -25,39 +23,36 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        ComponentsHolder.appComponent.inject(this)
-        tvGetVercode.setOnClickListener { getVercode() }
+
         tvRegister.setOnClickListener { register() }
         tvLogin.setOnClickListener { login() }
         tvGetTag.setOnClickListener { getTag() }
         tvGetOccupation.setOnClickListener { getOccupation() }
     }
 
-    override fun onBackPressed() {
-        getVercode()
-    }
+
 
     @Inject
     lateinit var loginService: LoginService
     @Inject
-    lateinit var mediatorService: MediatorService
+    lateinit var mediateService: MediateService
 
-    private fun getVercode() {
-        loginService.getVerifyCode("13611840424")
-                .subscribeOn(Schedulers.io())
-                .subscribeBy(
-                        onError = {
-                            // TODO 统一处理
-                            if (it is HttpException && it.code() == 400) {
-                                it.response().errorBody()?.string().let { ToastUtils.showShort(it) }
-                            }
-                        },
-                        onNext = {
-
-                            //                            Log.e("result", it.toString())
-                        }
-                )
-    }
+//    private fun getVercode() {
+//        loginService.getVerifyCode("13611840424")
+//                .subscribeOn(Schedulers.io())
+//                .subscribeBy(
+//                        onError = {
+//                            // TODO 统一处理
+//                            if (it is HttpException && it.code() == 400) {
+//                                it.response().errorBody()?.string().let { ToastUtils.showShort(it) }
+//                            }
+//                        },
+//                        onNext = {
+//
+//                            //                            Log.e("result", it.toString())
+//                        }
+//                )
+//    }
 
     private fun register() {
         loginService.register(RegisterParam("13611840424", "123456", "160217"))
@@ -119,7 +114,7 @@ class MainActivity : AppCompatActivity() {
                         })
     }
 
-    private fun getTags() = mediatorService.getMediateTag()
+    private fun getTags() = mediateService.getMediateTag()
             .subscribeOn(Schedulers.io())
             .doOnSubscribe { log("获取Tags...") }
             .doOnNext { log("取到Tags: $it") }
@@ -127,7 +122,7 @@ class MainActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
 
     private fun getOccupation() {
-        mediatorService.getOccupations()
+        mediateService.getOccupations()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
