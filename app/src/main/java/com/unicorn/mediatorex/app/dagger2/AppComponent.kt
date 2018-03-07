@@ -17,6 +17,7 @@ import javax.inject.Singleton
 ])
 interface AppComponent {
 
+
     fun getLoginService(): LoginService
     fun getDiskLogAdapter(): DiskLogAdapter
     fun getAndroidLogAdapter(): AndroidLogAdapter

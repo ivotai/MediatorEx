@@ -25,7 +25,7 @@ class RetrofitModule {
                     chain.proceed(chain.request())
                 else
                     chain.request().newBuilder()
-                            .addHeader("Cookie", "SESSION=${UserInfo.jessionId}")
+                            .addHeader("Cookie", "SESSION=${UserInfo.jsessionid}")
                             .build()
                             .let { chain.proceed(it) }
             }

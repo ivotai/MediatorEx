@@ -9,39 +9,38 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
 
-class LoginPresenter(private val loginView: LoginView, private val loginService: LoginService) {
+class LoginPresenter(private val view: LoginView, private val service: LoginService) {
 
     fun getVerifyCode(phoneNo: String) {
-        loginView.showLoading("获取验证码中")
-        loginService.getVerifyCode(phoneNo)
+        view.showLoading("获取验证码中")
+        service.getVerifyCode(phoneNo)
                 .subscribeOn(Schedulers.io())
-                .logWrapper("获取验证码")
+                .logWrapper("getVerifyCode")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onError = {
-                            loginView.hideLoading()
-//                            it.toast400()
+                            view.hideLoading()
                         },
                         onSuccess = {
-                            loginView.hideLoading()
-                            loginView.showMsg("验证码已发送")
+                            view.hideLoading()
+                            view.showMsg("验证码已发送")
                         }
                 )
     }
 
     fun register(registerInfo: RegisterInfo) {
-        loginView.showLoading("注册中")
-        loginService.register(registerInfo)
+        view.showLoading("注册中")
+        service.register(registerInfo)
                 .subscribeOn(Schedulers.io())
-                .logWrapper("注册")
+                .logWrapper("register")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onError = {
-                            loginView.hideLoading()
+                            view.hideLoading()
                         },
                         onSuccess = {
-                            loginView.hideLoading()
-                            loginView.showMsg("注册成功")
+                            view.hideLoading()
+                            view.showMsg("注册成功")
                         }
                 )
     }

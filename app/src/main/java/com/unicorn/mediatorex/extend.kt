@@ -3,28 +3,20 @@ package com.unicorn.mediatorex
 import com.blankj.utilcode.util.ToastUtils
 import com.orhanobut.logger.Logger
 import io.reactivex.Single
+import org.json.JSONObject
 import retrofit2.HttpException
 
-
 fun Single<*>.logWrapper(action: String): Single<*> {
-    return this.doOnSubscribe { Logger.d("${action}中...") }
+    return this.doOnSubscribe { Logger.d("$action...") }
             .doOnSuccess {
-                Logger.d("${action}成功，值: $it")
+                Logger.d("$action success，value: $it")
             }
             .doOnError {
                 val error =
                 if (it is HttpException && it.code() == 400) {
-                    it.response().errorBody()?.string()
+                    it.response().errorBody()?.string().let { JSONObject(it).getString("error") }
                 }else it.toString()
-                Logger.d("${action}失败，错误信息:$error")
+                Logger.d("$action error，value:$error")
                 ToastUtils.showShort(error)
             }
-}
-
-fun Throwable.toast400(){
-    val msg = if (this is HttpException && this.code() == 400)
-        this.response().errorBody()?.string()
-    else
-        this.toString()
-    ToastUtils.showShort(msg)
 }
