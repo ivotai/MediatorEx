@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.blankj.utilcode.util.ToastUtils
+import com.orhanobut.logger.Logger
 import com.unicorn.mediatorex.dagger2.ComponentsHolder
 import com.unicorn.mediatorex.service.MediatorService
 import com.unicorn.mediatorex.service.UserService
@@ -22,6 +23,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ComponentsHolder.appComponent.inject(this)
+        tvGetVercode.setOnClickListener { getVercode() }
+        tvRegister.setOnClickListener { register() }
         tvLogin.setOnClickListener { login() }
         tvGetTag.setOnClickListener { getTag() }
         tvGetOccupation.setOnClickListener { getOccupation() }
@@ -37,11 +40,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var mediatorService: MediatorService
 
     private fun getVercode() {
-        userService.getVerifyCode("18930158215")
+        userService.getVerifyCode("13611840424")
                 .subscribeOn(Schedulers.io())
-                .retryWhen {
-                    Observable.just(1)
-                }
                 .subscribeBy(
                         onError = {
                             // TODO 统一处理
@@ -50,13 +50,14 @@ class MainActivity : AppCompatActivity() {
                             }
                         },
                         onNext = {
+
                             //                            Log.e("result", it.toString())
                         }
                 )
     }
 
     private fun register() {
-        userService.register(RegisterParam("13611840424", "123456", "158736"))
+        userService.register(RegisterParam("13611840424", "123456", "160217"))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
@@ -67,13 +68,14 @@ class MainActivity : AppCompatActivity() {
                             Log.e("result", it.toString())
                         },
                         onNext = {
-                            Log.e("result", it.toString())
+
+//                            Log.e("result", it.toString())
                         }
                 )
     }
 
     private fun login() {
-        userService.login("18930158215", "123456")
+        userService.login("13611840424", "123456")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
@@ -86,37 +88,40 @@ class MainActivity : AppCompatActivity() {
                 )
     }
 
-    private fun relogin() {
-        userService.loginByToken(UserInfo.loginResponse!!.loginToken)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+    private fun relogin() = userService.loginByToken(UserInfo.loginResponse!!.loginToken)
+            .subscribeOn(Schedulers.io())
+            .doOnSubscribe { log("自动登录中...") }
+            .doOnNext {
+                UserInfo.loginResponse = it
+                log("自动登录成功，Token已更新")
+            }
 
-                .subscribeBy(
-                        onComplete = {
-                            Log.e("result", "complete")
-                        },
-                        onError = {
-                            Log.e("result", it.toString())
-                        },
-                        onNext = {
-                            UserInfo.loginResponse = it
-                        }
-                )
-    }
 
     private fun getTag() {
-        mediatorService.getTags()
-                .subscribeOn(Schedulers.io())
+        getTags()
+                .retryWhen { it.flatMap {
+                    if (it is HttpException && it.code() == 403) {
+                        relogin()
+                    }
+                    else
+                        Observable.error<Any>(it)
+                } }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                        onError = {
-                            Log.e("result", it.toString())
-                        },
                         onNext = {
-                            Log.e("result", it.toString())
-                        }
-                )
+                            it.let { log(it) }
+                        },
+                        onError = {
+                            it.let { log(it) }
+                        })
     }
+
+    private fun getTags() = mediatorService.getMediateTag()
+            .subscribeOn(Schedulers.io())
+            .doOnSubscribe { log("获取Tags...") }
+            .doOnNext { log("取到Tags: $it") }
+            .doOnError { log("Token过期") }
+            .subscribeOn(Schedulers.io())
 
     private fun getOccupation() {
         mediatorService.getOccupations()
@@ -130,6 +135,10 @@ class MainActivity : AppCompatActivity() {
                             Log.e("result", it.toString())
                         }
                 )
+    }
+
+    private fun log(a: Any) {
+        Logger.d( a.toString())
     }
 
 }

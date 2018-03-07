@@ -12,4 +12,7 @@ interface MediatorService {
     @GET("public/occupations")
     fun getOccupations(): Observable<List<Label>>
 
+    @GET("api/v1/mediate/tag")
+    fun getMediateTag(): Observable<Any>
+
 }

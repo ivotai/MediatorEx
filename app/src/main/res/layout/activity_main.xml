@@ -5,6 +5,21 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tvGetVercode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GetVercode" />
+
+    <TextView
+        android:layout_marginTop="40dp"
+        android:id="@+id/tvRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register" />
+
+
+    <TextView
+        android:layout_marginTop="40dp"
         android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
