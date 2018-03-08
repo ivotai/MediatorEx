@@ -7,10 +7,10 @@ import retrofit2.http.GET
 interface MediateService {
 
     @GET("public/tags")
-    fun getTags(): Observable<List<Label>>
+    fun getPublicTag(): Observable<List<Label>>
 
     @GET("public/occupations")
-    fun getOccupations(): Observable<List<Label>>
+    fun getOccupation(): Observable<List<Label>>
 
     @GET("api/v1/mediate/tag")
     fun getMediateTag(): Observable<Any>

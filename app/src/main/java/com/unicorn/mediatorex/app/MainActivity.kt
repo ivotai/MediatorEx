@@ -1,4 +1,4 @@
-package com.unicorn.mediatorex.login
+package com.unicorn.mediatorex.app
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
 
     private fun getOccupation() {
-        mediateService.getOccupations()
+        mediateService.getOccupation()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(

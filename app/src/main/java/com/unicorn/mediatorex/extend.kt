@@ -1,11 +1,14 @@
 package com.unicorn.mediatorex
 
+import android.widget.TextView
 import com.blankj.utilcode.util.ToastUtils
+import com.jakewharton.rxbinding2.view.RxView
 import com.orhanobut.logger.Logger
 import io.reactivex.Observable
 import io.reactivex.Single
 import org.json.JSONObject
 import retrofit2.HttpException
+import java.util.concurrent.TimeUnit
 
 fun <T> Single<T>.logWrapper(action: String): Single<T> {
     return this.doOnSubscribe { Logger.d("$action...") }
@@ -35,4 +38,8 @@ fun <T> Observable<T>.logWrapper(action: String): Observable<T> {
                 Logger.d("$action error，value:$error")
                 ToastUtils.showShort(error)
             }
+}
+
+fun TextView.clicks():Observable<Any>{
+    return RxView.clicks(this).throttleFirst(1, TimeUnit.SECONDS)
 }

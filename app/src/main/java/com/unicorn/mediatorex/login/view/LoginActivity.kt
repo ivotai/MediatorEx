@@ -1,11 +1,12 @@
 package com.unicorn.mediatorex.login.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.afollestad.materialdialogs.MaterialDialog
-import com.blankj.utilcode.util.ToastUtils
 import com.unicorn.mediatorex.R
 import com.unicorn.mediatorex.app.dagger2.ComponentsHolder
+import com.unicorn.mediatorex.clicks
 import com.unicorn.mediatorex.login.model.RegisterInfo
 import com.unicorn.mediatorex.login.presenter.LoginPresenter
 import kotlinx.android.synthetic.main.activity_login.*
@@ -13,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), LoginView {
 
+    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -23,20 +25,21 @@ class LoginActivity : AppCompatActivity(), LoginView {
         etPassword.setText("123456")
 
         val presenter = LoginPresenter(this, ComponentsHolder.appComponent.getLoginService())
-        btnVerifyCode.setOnClickListener { presenter.getVerifyCode(etPhoneNo.text.toString()) }
-        btnRegister.setOnClickListener {
+        btnVerifyCode.clicks().subscribe { presenter.getVerifyCode(etPhoneNo.text.toString()) }
+        btnRegister.clicks().subscribe {
             presenter.register(RegisterInfo(
                     phoneNo = etPhoneNo.text.toString(),
                     password = etPassword.text.toString(),
                     verifyCode = etVerifyCode.text.toString()
             ))
         }
-        btnLogin.setOnClickListener {
+        btnLogin.clicks().subscribe {
             presenter.login(
                     username = etPhoneNo.text.toString(),
                     password = etPassword.text.toString()
             )
         }
+        btnActivateIdentity.clicks().subscribe { presenter.activateIdentity() }
     }
 
     private var dialog: MaterialDialog? = null
@@ -50,11 +53,9 @@ class LoginActivity : AppCompatActivity(), LoginView {
     }
 
     override fun hideLoading() {
-        dialog?.dismiss()
-    }
-
-    override fun showMsg(msg: String) {
-        ToastUtils.showShort(msg)
+        if (dialog?.isShowing!!) {
+            dialog?.dismiss()
+        }
     }
 
 }

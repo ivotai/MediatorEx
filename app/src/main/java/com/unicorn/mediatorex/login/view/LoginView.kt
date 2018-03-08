@@ -6,6 +6,4 @@ interface LoginView {
 
     fun hideLoading()
 
-    fun showMsg(msg: String)
-
 }
