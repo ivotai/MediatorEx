@@ -19,6 +19,9 @@ class LoginActivity : AppCompatActivity(), LoginView {
 
         supportActionBar?.title = "注册&登录"
 
+        etPhoneNo.setText("13611840424")
+        etPassword.setText("123456")
+
         val presenter = LoginPresenter(this, ComponentsHolder.appComponent.getLoginService())
         btnVerifyCode.setOnClickListener { presenter.getVerifyCode(etPhoneNo.text.toString()) }
         btnRegister.setOnClickListener {
@@ -27,6 +30,12 @@ class LoginActivity : AppCompatActivity(), LoginView {
                     password = etPassword.text.toString(),
                     verifyCode = etVerifyCode.text.toString()
             ))
+        }
+        btnLogin.setOnClickListener {
+            presenter.login(
+                    username = etPhoneNo.text.toString(),
+                    password = etPassword.text.toString()
+            )
         }
     }
 

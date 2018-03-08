@@ -1,5 +1,7 @@
 package com.unicorn.mediatorex.login.presenter
 
+import com.blankj.utilcode.util.ToastUtils
+import com.unicorn.mediatorex.app.model.UserInfo
 import com.unicorn.mediatorex.logWrapper
 import com.unicorn.mediatorex.login.model.RegisterInfo
 import com.unicorn.mediatorex.login.service.LoginService
@@ -41,6 +43,24 @@ class LoginPresenter(private val view: LoginView, private val service: LoginServ
                         onSuccess = {
                             view.hideLoading()
                             view.showMsg("注册成功")
+                        }
+                )
+    }
+
+    fun login(username: String, password: String) {
+        view.showLoading("登录中")
+        service.login(username, password)
+                .subscribeOn(Schedulers.io())
+                .logWrapper("login")
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onError = {
+                            view.hideLoading()
+                        },
+                        onSuccess = {
+                            view.hideLoading()
+                            UserInfo.loginResponse = it
+                            ToastUtils.showShort("登录成功")
                         }
                 )
     }

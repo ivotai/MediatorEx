@@ -18,7 +18,7 @@ interface LoginService {
 
     @FormUrlEncoded
     @POST("login/default")
-    fun login(@Field("username") username: String, @Field("password") password: String): Observable<LoginResponse>
+    fun login(@Field("username") username: String, @Field("password") password: String): Single<LoginResponse>
 
     @FormUrlEncoded
     @POST("login/token")

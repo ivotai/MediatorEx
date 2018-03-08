@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        tvLogin.setOnClickListener { login() }
+
         tvGetTag.setOnClickListener { getTag() }
         tvGetOccupation.setOnClickListener { getOccupation() }
     }
@@ -71,19 +71,7 @@ class MainActivity : AppCompatActivity() {
 //                )
 //    }
 
-    private fun login() {
-        loginService.login("13611840424", "123456")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onError = {
-                            Log.e("result", it.toString())
-                        },
-                        onNext = {
-                            UserInfo.loginResponse = it
-                        }
-                )
-    }
+
 
     private fun relogin() = loginService.loginByToken(UserInfo.loginResponse!!.loginToken)
             .subscribeOn(Schedulers.io())
