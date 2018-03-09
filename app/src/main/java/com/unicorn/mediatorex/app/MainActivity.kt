@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
 
     private fun getOccupation() {
-        mediateService.getOccupation()
+        mediateService.getPublicOccupations()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(

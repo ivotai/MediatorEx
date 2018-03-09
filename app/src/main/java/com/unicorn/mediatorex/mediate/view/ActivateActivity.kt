@@ -24,6 +24,7 @@ class ActivateActivity : AppCompatActivity(),ActivateView {
         val presenter = ActivatePresenter(this,ComponentsHolder.appComponent.getMediateService())
         tvOccupation.clicks().subscribe { presenter.showOccupation() }
         tvSkill.clicks().subscribe { presenter.showSkills() }
+        tvRegion.clicks().subscribe { presenter.getRegion() }
     }
 
 

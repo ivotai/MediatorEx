@@ -2,4 +2,4 @@ package com.unicorn.mediatorex.mediate.model
 
 import android.support.annotation.Size
 
-open class Label(val name: String, @Size(36) val objectId: String)
+class Region3(name: String, @Size(36) objectId: String) : Label(name, objectId)
