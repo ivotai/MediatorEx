@@ -1,5 +1,6 @@
 package com.unicorn.mediatorex.mediate.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.afollestad.materialdialogs.MaterialDialog
@@ -12,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_activate.*
 
 class ActivateActivity : AppCompatActivity(),ActivateView {
 
+    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_activate)
@@ -21,6 +23,7 @@ class ActivateActivity : AppCompatActivity(),ActivateView {
 
         val presenter = ActivatePresenter(this,ComponentsHolder.appComponent.getMediateService())
         tvOccupation.clicks().subscribe { presenter.showOccupation() }
+        tvSkill.clicks().subscribe { presenter.showSkills() }
     }
 
 
