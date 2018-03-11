@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etAddress" />
 
     <TextView
-        android:id="@+id/tvSkill"
+        android:id="@+id/tvTag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -92,7 +92,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSkill" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTag" />
 
     <Button
         android:id="@+id/btnActive"

@@ -1,9 +1,14 @@
 package com.unicorn.mediatorex.mediate.view
 
-interface ActivateView {
+import com.unicorn.mediatorex.mediate.model.Label
+import com.unicorn.mediatorex.mediate.wheel.PickerListener
 
-    fun showLoading(title:String)
+interface ActivateView :BaseView{
 
-    fun hideLoading()
+    fun showWheelPicker(data:List<Label>,listener: PickerListener)
+
+    fun renderOccupation(occupation:String)
+
+    fun renderTag(tag:String)
 
 }

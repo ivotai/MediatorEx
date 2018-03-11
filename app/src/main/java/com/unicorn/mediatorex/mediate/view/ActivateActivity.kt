@@ -8,7 +8,10 @@ import com.unicorn.mediatorex.R
 import com.unicorn.mediatorex.app.dagger2.ComponentsHolder
 import com.unicorn.mediatorex.app.model.UserInfo
 import com.unicorn.mediatorex.clicks
+import com.unicorn.mediatorex.mediate.model.Label
 import com.unicorn.mediatorex.mediate.presenter.ActivatePresenter
+import com.unicorn.mediatorex.mediate.wheel.PickerListener
+import com.unicorn.mediatorex.mediate.wheel.WheelPickerFragment
 import kotlinx.android.synthetic.main.activity_activate.*
 
 class ActivateActivity : AppCompatActivity(), ActivateView {
@@ -23,14 +26,32 @@ class ActivateActivity : AppCompatActivity(), ActivateView {
 
         val presenter = ActivatePresenter(this, ComponentsHolder.appComponent.getMediateService())
         tvOccupation.clicks().subscribe { presenter.showOccupation() }
-        tvSkill.clicks().subscribe { presenter.showSkills() }
+        tvTag.clicks().subscribe { presenter.showSkills() }
         tvRegion.clicks().subscribe { presenter.loadRegion() }
         btnActive.clicks().subscribe {
-presenter.active()
-             }
+            presenter.active()
+        }
     }
 
+    override fun showWheelPicker(data: List<Label>, listener: PickerListener) {
+        WheelPickerFragment().apply {
+            this.data = data
+            this.listener = listener
+        }.show(supportFragmentManager, "wpf")
+    }
 
+    override fun renderOccupation(occupation: String) {
+        tvOccupation.text = occupation
+    }
+
+    override fun renderTag(tag: String) {
+       tvTag.text = tag
+    }
+
+    private fun bindEvents() {
+
+
+    }
 
     private var dialog: MaterialDialog? = null
 

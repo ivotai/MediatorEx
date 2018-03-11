@@ -7,7 +7,10 @@ import com.orhanobut.logger.Logger
 import com.unicorn.mediatorex.logWrapper
 import com.unicorn.mediatorex.mediate.model.*
 import com.unicorn.mediatorex.mediate.service.MediateService
-import com.unicorn.mediatorex.mediate.view.*
+import com.unicorn.mediatorex.mediate.view.ActivateActivity
+import com.unicorn.mediatorex.mediate.view.ActivateView
+import com.unicorn.mediatorex.mediate.wheel.PickerListener
+import com.unicorn.mediatorex.mediate.wheel.RegionPickerFragment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -23,26 +26,20 @@ class ActivatePresenter(private val view: ActivateView, private val service: Med
     @SuppressLint("CheckResult")
     fun showOccupation() {
         loadOccupation()
+                .doOnTerminate {
+
+                }
                 .subscribeBy(
                         onError = { view.hideLoading() },
                         onNext = {
                             view.hideLoading()
-                            showLabelPicker(it, (view as AppCompatActivity).supportFragmentManager, object : PickerListener {
+                            view.showWheelPicker(it, object : PickerListener {
                                 override fun onPickerConfirm(label: Label) {
                                     activateInfo.occupation = label
-                                    view as ActivateActivity
-                                        view.tvOccupation.text = label.name
+                                    view.renderOccupation(label.name)
                                 }
                             })
                         })
-    }
-
-
-    fun showLabelPicker(labels: List<Label>, fm: FragmentManager, listener: PickerListener) {
-        val bf = CommomPickerFragment()
-        bf.labels = labels
-        bf.listener = listener
-        bf.show(fm, "sf")
     }
 
 
@@ -63,23 +60,22 @@ class ActivatePresenter(private val view: ActivateView, private val service: Med
     }
 
     fun showSkills() {
-        loadSkills().subscribeBy(
+        loadTags().subscribeBy(
                 onError = { view.hideLoading() },
                 onNext = {
 
                     activateInfo.tags = listOf(it[0].objectId, it[1].objectId)
                     view.hideLoading()
-                    showLabelPicker(it, (view as AppCompatActivity).supportFragmentManager, object : PickerListener {
+                    view.showWheelPicker(it, object : PickerListener {
                         override fun onPickerConfirm(label: Label) {
                             activateInfo.tags = listOf(label.objectId)
-                            view as ActivateActivity
-                            view.tvSkill.text = label.name
+                            view.renderTag(label.name)
                         }
                     })
                 })
     }
 
-    private fun loadSkills(): Observable<List<Label>> {
+    private fun loadTags(): Observable<List<Label>> {
         view.showLoading("获取标识中")
         return service.getPublicTags()
                 .subscribeOn(Schedulers.io())
@@ -92,14 +88,14 @@ class ActivatePresenter(private val view: ActivateView, private val service: Med
         view.showLoading("加载区域")
 
         getRegion().subscribe {
-//            val region3 = it[0].region2s[0].region3s[0]
+            //            val region3 = it[0].region2s[0].region3s[0]
 //            activateInfo.committeeRegion = region3
 //            activateInfo.resideRegion = region3
             view.hideLoading()
-            showRegionPicker(it, (view as AppCompatActivity).supportFragmentManager,object :PickerListener{
+            showRegionPicker(it, (view as AppCompatActivity).supportFragmentManager, object : PickerListener {
                 override fun onPickerConfirm(label: Label) {
-            activateInfo.committeeRegion = label
-            activateInfo.resideRegion = label
+                    activateInfo.committeeRegion = label
+                    activateInfo.resideRegion = label
                     view as ActivateActivity
                     view.tvRegion.text = label.name
                 }

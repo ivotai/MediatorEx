@@ -1,4 +1,4 @@
-package com.unicorn.mediatorex.mediate.view
+package com.unicorn.mediatorex.mediate.wheel
 
 import com.unicorn.mediatorex.mediate.model.Label
 
