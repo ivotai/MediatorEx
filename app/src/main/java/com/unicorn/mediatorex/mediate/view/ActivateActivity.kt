@@ -11,7 +11,7 @@ import com.unicorn.mediatorex.clicks
 import com.unicorn.mediatorex.mediate.presenter.ActivatePresenter
 import kotlinx.android.synthetic.main.activity_activate.*
 
-class ActivateActivity : AppCompatActivity(),ActivateView {
+class ActivateActivity : AppCompatActivity(), ActivateView {
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,11 +21,15 @@ class ActivateActivity : AppCompatActivity(),ActivateView {
 
         tvPhoneNo.text = UserInfo.username
 
-        val presenter = ActivatePresenter(this,ComponentsHolder.appComponent.getMediateService())
+        val presenter = ActivatePresenter(this, ComponentsHolder.appComponent.getMediateService())
         tvOccupation.clicks().subscribe { presenter.showOccupation() }
         tvSkill.clicks().subscribe { presenter.showSkills() }
-        tvRegion.clicks().subscribe { presenter.getRegion() }
+        tvRegion.clicks().subscribe { presenter.loadRegion() }
+        btnActive.clicks().subscribe {
+presenter.active()
+             }
     }
+
 
 
     private var dialog: MaterialDialog? = null

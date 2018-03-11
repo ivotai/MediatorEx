@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_grey_400">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_white"
+        android:padding="16dp"
+        android:text="选择证件类型"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.aigestudio.wheelpicker.WheelPicker
+        android:id="@+id/picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1px"
+        android:background="@color/md_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        app:wheel_atmospheric="true"
+        app:wheel_curved="true"
+        app:wheel_indicator="true"
+        app:wheel_indicator_color="@color/md_grey_400"
+        app:wheel_indicator_size="1px"
+        app:wheel_item_text_color="@color/md_grey_500"
+        app:wheel_item_text_size="30dp"
+        app:wheel_selected_item_text_color="@color/md_black"
+        app:wheel_visible_item_count="7" />
+
+    <TextView
+        android:id="@+id/tvCancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1px"
+        android:layout_marginRight="1px"
+        android:background="@color/md_white"
+        android:padding="16dp"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/md_black"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toStartOf="@+id/tvConfirm"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/picker" />
+
+    <TextView
+        android:padding="16dp"
+        android:id="@+id/tvConfirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1px"
+        android:background="@color/md_white"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/md_black"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvCancel"
+        app:layout_constraintTop_toBottomOf="@+id/picker" />
+
+</android.support.constraint.ConstraintLayout>
