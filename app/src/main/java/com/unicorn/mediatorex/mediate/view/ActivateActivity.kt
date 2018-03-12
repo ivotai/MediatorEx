@@ -1,6 +1,7 @@
 package com.unicorn.mediatorex.mediate.view
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.afollestad.materialdialogs.MaterialDialog
@@ -31,6 +32,11 @@ class ActivateActivity : AppCompatActivity(), ActivateView {
         btnActive.clicks().subscribe {
             presenter.active()
         }
+        btnMediation.clicks().subscribe {
+            Intent(this@ActivateActivity, MediationAct::class.java).let {
+                startActivity(it)
+            }
+        }
     }
 
     override fun showWheelPicker(data: List<Label>, listener: PickerListener) {
@@ -45,7 +51,7 @@ class ActivateActivity : AppCompatActivity(), ActivateView {
     }
 
     override fun renderTag(tag: String) {
-       tvTag.text = tag
+        tvTag.text = tag
     }
 
     private fun bindEvents() {

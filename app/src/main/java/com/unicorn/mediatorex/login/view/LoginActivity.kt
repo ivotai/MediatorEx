@@ -9,7 +9,6 @@ import com.unicorn.mediatorex.app.dagger2.ComponentsHolder
 import com.unicorn.mediatorex.clicks
 import com.unicorn.mediatorex.login.model.RegisterInfo
 import com.unicorn.mediatorex.login.presenter.LoginPresenter
-import com.unicorn.mediatorex.mediate.wheel.WheelPickerFragment
 import kotlinx.android.synthetic.main.activity_login.*
 
 
@@ -36,12 +35,10 @@ class LoginActivity : AppCompatActivity(), LoginView {
         }
         btnLogin.clicks().subscribe {
 
-            WheelPickerFragment()
-                    .show(supportFragmentManager,"sf")
-//            presenter.login(
-//                    username = etPhoneNo.text.toString(),
-//                    password = etPassword.text.toString()
-//            )
+            presenter.login(
+                    username = etPhoneNo.text.toString(),
+                    password = etPassword.text.toString()
+            )
         }
         btnActivateIdentity.clicks().subscribe { presenter.activateIdentity() }
 

@@ -13,26 +13,24 @@ import com.unicorn.mediatorex.clicks
 import com.unicorn.mediatorex.mediate.model.Label
 
 
-class WheelPickerFragment : BottomSheetDialogFragment (){
-
-
+class WheelPickerFragment : BottomSheetDialogFragment() {
 
     lateinit var listener: PickerListener
-    lateinit var data:List<Label>
+    lateinit var data: List<Label>
 
     @SuppressLint("CheckResult")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view = inflater.inflate(R.layout.picker_one,container)
-                val picker = view.findViewById<WheelPicker>(R.id.picker)
-//        picker.data = labels
+        val view = inflater.inflate(R.layout.picker_one, container)
+        val picker = view.findViewById<WheelPicker>(R.id.picker)
+        picker.data = data
         val tvConfirm = view.findViewById<TextView>(R.id.tvConfirm)
         tvConfirm.clicks().subscribe {
-
+            listener.onPickerConfirm(data[picker.currentItemPosition])
             dismiss()
         }
         val tvCancel = view.findViewById<TextView>(R.id.tvCancel)
         tvCancel.clicks().subscribe { dismiss() }
-    return view
+        return view
     }
 
     //    @SuppressLint("CheckResult")
@@ -80,4 +78,4 @@ class WheelPickerFragment : BottomSheetDialogFragment (){
 //                override fun onSlide(bottomSheet: View, slideOffset: Float) {}
 //            })
 //        }
-    }
+}

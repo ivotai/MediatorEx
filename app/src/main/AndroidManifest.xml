@@ -21,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".im.ImActivity" />
-        <activity android:name=".mediate.view.ActivateActivity"></activity>
+        <activity android:name=".mediate.view.ActivateActivity" />
+        <activity android:name=".mediate.view.MediationAct"></activity>
     </application>
 
 </manifest>
